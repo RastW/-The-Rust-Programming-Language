@@ -1,0 +1,3 @@
+Rust so safe and safe.
+to Go!
+No GC，not runtime。
