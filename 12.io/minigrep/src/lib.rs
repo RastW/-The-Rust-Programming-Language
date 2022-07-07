@@ -1,6 +1,23 @@
 use std::error::Error;
 use std::{fs, vec, env};
 
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
+
+    let result = if config.case_sensitive {
+        search(&config.query, &contents)
+    } else {
+        search_case_insensitive(&config.query, &contents)
+    };
+
+    for line in result {
+            println!("{}", line);
+    }
+    // search(&config.query, &contents);
+    // println!("{}", contents);
+    Ok(())
+}
+
 pub struct Config {
     query: String,
     filename: String,
@@ -23,25 +40,7 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
-
-    let result = if config.case_sensitive {
-        search(&config.query, &contents);
-    } else {
-        search_case_insensitive(&config.query, &contents);
-    };
-
-    for line in contents.lines() {
-        if line.contains(&config.query) {
-            println!("{}", line);
-        }
-    }
-    // search(&config.query, &contents);
-    // println!("{}", contents);
-    Ok(())
-}
-
+// 区分大小写
 fn search<'a>(query: &'a str, content: &'a str) -> Vec<&'a str> {
     let mut result = Vec::new();
 
@@ -54,6 +53,7 @@ fn search<'a>(query: &'a str, content: &'a str) -> Vec<&'a str> {
     return result;
 }
 
+// 不区分大小写
 fn search_case_insensitive<'a>(query: &'a str, contents: &'a str) -> Vec<&'a str> {
     let query_str = query.to_lowercase();
     let mut result = Vec::new();
