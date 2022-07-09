@@ -25,12 +25,20 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(list: &[String]) -> Result<Config, &'static str> {
-        if list.len() < 3 {
+    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+        if args.len() < 3 {
             return Err("not enough arguments");
         }
-        let query = list[1].clone();
-        let filename = list[2].clone();
+        args.next();
+        let query = match args.next() {
+            Some(query) => query,
+            None => return Err("Didn't get a query string"),
+        };
+
+        let filename = match args.next() {
+            Some(filename) => filename,
+            None => return Err("Didn't get a query string"),
+        };
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
         Ok(Config {
             query: query,
@@ -42,15 +50,16 @@ impl Config {
 
 // 区分大小写
 fn search<'a>(query: &'a str, content: &'a str) -> Vec<&'a str> {
-    let mut result = Vec::new();
+    // let mut results = Vec::new();
 
-    for line in content.lines() {
-        if line.contains(query) {
-            result.push(line);
-        }
-    }
+    // for line in content.lines() {
+    //     if line.contains(query) {
+    //         results.push(line);
+    //     }
+    // }
 
-    return result;
+    content.lines()
+        .filter(|line| line.contains(query)).collect()
 }
 
 // 不区分大小写
