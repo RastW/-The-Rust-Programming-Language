@@ -5,5 +5,7 @@ members = [
     "book_02/gussess_name",
     # # "book_03/hello_cargo",
     "book_04/ownership",
-    "book_04/slices_04_03"
+    "book_04/slices_04_03",
+    "book_05/demo_05_01",
+    "book_05/demo_05_02"
 ]
