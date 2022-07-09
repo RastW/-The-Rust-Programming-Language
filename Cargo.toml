@@ -3,10 +3,23 @@
 members = [
     "book_01/hello_cargo",
     "book_02/gussess_name",
-    # # "book_03/hello_cargo",
+    # "book_03/hello_cargo",
     "book_04/ownership",
     "book_04/slices_04_03",
     "book_05/demo_05_01",
     "book_05/demo_05_02",
-    "book_06/demo_06_01"
+    "book_06/demo_06_01",
+    "book_06/option_06_02",
+    "book_06/if_let_06_03",
+    "book_07/my-project",
+    "book_08/haspmap",
+    "book_08/string",
+    "book_08/string",
+    "book_10/lifetime",
+    "book_10/my-project-new",
+    "book_12/minigrep",
+    "book_13/closures",
+    "book_13/iterators",
+    "book_13/minigrep-new",
+    "book_14/release"
 ]
