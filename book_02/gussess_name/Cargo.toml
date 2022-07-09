@@ -1,10 +1,9 @@
 [package]
-name = "guessing_game"
+name = "gussess_name"
 version = "0.1.0"
 edition = "2021"
-authors = ["rast <rast.leonhart@qq.com>"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rand = "0.4.0"
+rand = "0.8.5"
