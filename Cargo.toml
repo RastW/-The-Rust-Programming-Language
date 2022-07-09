@@ -7,5 +7,6 @@ members = [
     "book_04/ownership",
     "book_04/slices_04_03",
     "book_05/demo_05_01",
-    "book_05/demo_05_02"
+    "book_05/demo_05_02",
+    "book_06/demo_06_01"
 ]
