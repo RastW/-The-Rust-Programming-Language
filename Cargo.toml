@@ -21,5 +21,6 @@ members = [
     "book_13/closures",
     "book_13/iterators",
     "book_13/minigrep-new",
-    "book_14/release"
+    "book_14/release",
+    "book_15/reference-counting",
 ]
