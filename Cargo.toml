@@ -23,4 +23,6 @@ members = [
     "book_13/minigrep-new",
     "book_14/release",
     "book_15/reference-counting",
+    "book_15/ref-cell",
+    "book_15/multiple-ownership",
 ]
