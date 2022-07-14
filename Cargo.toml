@@ -27,4 +27,5 @@ members = [
     "book_15/multiple-ownership",
     "book_15/weak",
     "book_16/thread",
+    "book_16/channel",
 ]
