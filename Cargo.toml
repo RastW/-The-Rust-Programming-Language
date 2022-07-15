@@ -28,4 +28,5 @@ members = [
     "book_15/weak",
     "book_16/thread",
     "book_16/channel",
+    "book_16/lock",
 ]
