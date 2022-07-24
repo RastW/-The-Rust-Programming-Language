@@ -31,4 +31,5 @@ members = [
     "book_16/lock",
     "book_16/send_sync",
     "book_17/state_pattern",
+    "book_20/web",
 ]
