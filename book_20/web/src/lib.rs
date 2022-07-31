@@ -7,7 +7,7 @@ pub struct ThreadPool {
 }
 
 // struct Job;
-type Job = Box<FnOnce() + Send + 'static>;
+type Job = Box<dyn FnOnce() + Send + 'static>;
 
 impl ThreadPool {
     pub fn new(size: usize) -> Self {
@@ -27,7 +27,18 @@ impl ThreadPool {
         F: FnOnce() + Send + 'static,
     {
         let f = Box::new(f);
-        self.Sender.send(f)
+        self.Sender.send(f);
+    }
+}
+
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        // 当线程池移出所有权，依次顺序等待所有线程执行完任务
+        for worker in &self.worker {
+            println!("Shutting down worker: {}", worker.id);
+
+            worker.thread.join().unwrap();
+        }    
     }
 }
 
@@ -38,7 +49,7 @@ struct Worker {
 
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-        let thread = thread::spawn(|| {
+        let thread = thread::spawn(move || {
             let job = receiver.lock().unwrap().recv().unwrap();
             println!("Worker {} got a job;  executing.", id);
             job()
