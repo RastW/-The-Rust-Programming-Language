@@ -1,4 +1,4 @@
-use std::{thread, sync::{mpsc, Mutex}};
+use std::{thread, sync::{mpsc, Mutex}, rc::Rc};
 use std::sync::Arc;
 
 pub struct ThreadPool {
@@ -34,17 +34,19 @@ impl ThreadPool {
 impl Drop for ThreadPool {
     fn drop(&mut self) {
         // 当线程池移出所有权，依次顺序等待所有线程执行完任务
-        for worker in &self.worker {
+        for worker in &mut self.worker {
             println!("Shutting down worker: {}", worker.id);
 
-            worker.thread.join().unwrap();
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
         }    
     }
 }
 
 struct Worker {
     id: usize,
-    thread: thread::JoinHandle<()>,
+    thread: Option<thread::JoinHandle<()>>,
 }
 
 impl Worker {
@@ -54,6 +56,6 @@ impl Worker {
             println!("Worker {} got a job;  executing.", id);
             job()
         });
-        Worker { id: id, thread: thread }
+        Worker { id: id, thread: Some(thread )}
     }
 }
